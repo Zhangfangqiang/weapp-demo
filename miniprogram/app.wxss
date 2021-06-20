@@ -13,23 +13,26 @@
   justify-content: flex-start;
 } */
 
-.example-container{
+.example-container {
   margin: 40rpx 0 40rpx;
   width: 650rpx;
   height: 100%;
 }
-.scale5{
+
+.scale5 {
   transform-origin: 0 0 0;
-  transform:scale(5,5)
+  transform: scale(5, 5)
 }
-.scale2{
+
+.scale2 {
   transform-origin: 0 0 0;
-  transform:scale(2,2)
+  transform: scale(2, 2)
 }
-.gap{
+
+.gap {
   width: 100%;
   height: auto;
-  margin-top:50px;
+  margin-top: 50px;
   padding: 10px 0 10px;
 }
 
@@ -39,21 +42,23 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}
 
 button {
   background: initial;
 }
 
-button:focus{
+button:focus {
   outline: 0;
 }
 
-button::after{
+button::after {
   border: none;
 }
 
-.userinfo, .uploader, .tunnel {
+.userinfo,
+.uploader,
+.tunnel {
   margin-top: 40rpx;
   height: 140rpx;
   width: 100%;
@@ -91,7 +96,8 @@ button::after{
   border: none;
 }
 
-.uploader, .tunnel {
+.uploader,
+.tunnel {
   height: auto;
   padding: 0 0 0 40rpx;
   flex-direction: column;
@@ -99,7 +105,8 @@ button::after{
   box-sizing: border-box;
 }
 
-.uploader-text, .tunnel-text {
+.uploader-text,
+.tunnel-text {
   width: 100%;
   line-height: 52px;
   font-size: 34rpx;
@@ -184,10 +191,11 @@ button::after{
 
 /* --- */
 
-.section{
+.section {
   padding: 20px;
 }
+
 /* 最后一个section */
-.section:last-child{
+.section:last-child {
   padding-bottom: 100rpx;
 }
