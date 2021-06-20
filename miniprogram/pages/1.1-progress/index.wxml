@@ -1,0 +1,40 @@
+<!-- 2.2 progress组件简介：如何自定义实现一个环形进度条？ -->
+<view class="page-section">
+  <view class="example-container">
+    
+    <!-- 模拟网络异步开始 -->
+    <view class="gap">模拟网络异步</view>
+    <!-- 
+      onTapProgressBar    :点击触发
+      onProgressActiveEnd :动画执行完毕触发
+    -->
+    <progress show-info bindtap="onTapProgressBar" stroke-width="2" percent="{{percentValue}}" backgroundColor="#f2f2f2"
+      active-mode="forwards" active bindactiveend="onProgressActiveEnd" />
+    <!-- 模拟网络异步结束 -->
+
+    <!-- progress已产生的进度条设置圆角开始-->
+    <view class="gap"></view>
+    <view class="gap">progress已产生的进度条如何设置圆角？</view>
+    <progress border-radius="5" percent="20" show-info />
+    <!-- progress已产生的进度条设置圆角结束-->
+
+    <!-- 进度条重新加载开始 -->
+    <view class="gap"></view>
+    <view class="gap">已经加载完的进度条progress，怎么点击某个按钮让它重新加载呢？</view>
+    <progress bindtap="onTapProgressBar" stroke-width="2" percent="{{percentValue}}" active-mode="forwards" active show-info="{{false}}" bindactiveend="onProgressActiveEnd" />
+    <view class="gap"></view>
+    <button type="default" bindtap="onTapReloadBtn">重新加载</button>
+    <!-- 进度条重新家在结束 -->
+
+    <!-- 环形进度条开始 -->
+    <view class="gap">环形进度条</view>
+    <circle-progress id="progress1" percent="{{percentValue}}" />
+    <button type="default" bindtap="drawProgress">redraw</button>
+    <!-- 环形进度条结束 -->
+
+    <!-- progress 右边进度的百分比数字，它的颜色怎么设置开始 -->
+    <view class="gap">progress 右边进度的百分比数字，它的颜色怎么设置？</view>
+    <progress percent="40" color="pink" stroke-width="5" show-info style="color:green" />
+    <!-- progress 右边进度的百分比数字，它的颜色怎么设置结束 -->
+  </view>
+</view>

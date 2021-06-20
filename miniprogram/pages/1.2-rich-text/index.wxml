@@ -1,0 +1,26 @@
+<view class="page-body">
+  <!-- 原生用法开始 -->
+  <view class="page-section">
+    <view class="page-section-title">rich-text传入html字符串</view>
+    <view class="rich-text-wrp">
+      <rich-text space="emsp" nodes="{{html}}" bindtap="tap"></rich-text>
+    </view>
+  </view>
+
+  <view class="page-section">
+    <view class="page-section-title">rich-text传入节点列表</view>
+    <view class="rich-text-wrp">
+      <rich-text nodes="{{nodes}}" bindtap="tap"></rich-text>
+    </view>
+  </view>
+  <!-- 原生用法结束 -->
+
+  <!-- 使用parser实现 rich-text 无法点击图片查看的功能开始 -->
+  <view class="page-section">
+    <view class="page-section-title">使用parser实现 rich-text 无法点击图片查看的功能</view>
+    <view class="rich-text-wrp">
+      <parser bindimgtap="onTapImage" html="{{html}}" tag-style="{{tagStyle}}" />
+    </view>
+  </view>
+  <!-- 使用parser实现 rich-text 无法点击图片查看的功能结束 -->
+</view>

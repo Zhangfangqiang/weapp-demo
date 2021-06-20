@@ -1,12 +1,25 @@
 <view class="container">
-
-
-  <!-- 云调用 -->
   <view class="uploader">
-    <navigator url="../openapi/openapi" open-type="navigate" class="uploader-text">
-      <text>云调用</text>
+    <navigator url="../1.0-icon/index" open-type="navigate" class="uploader-text">
+      <text>1.0-icon 图标 图片 调用</text>
     </navigator>
   </view>
 
+  <view class="uploader">
+    <navigator url="../1.1-progress/index" open-type="navigate" class="uploader-text">
+      <text>1.1-progress进度条</text>
+    </navigator>
+  </view>
 
+  <view class="uploader">
+    <navigator url="../1.2-rich-text/index" open-type="navigate" class="uploader-text">
+      <text>1.2 rich-text html显示</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../1.3-view/index" open-type="navigate" class="uploader-text">
+      <text>1.3 view事件 button按钮 分享 filx布局</text>
+    </navigator>
+  </view>
 </view>

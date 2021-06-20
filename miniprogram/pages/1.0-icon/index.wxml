@@ -1,0 +1,35 @@
+<view>
+  <!-- 原生开始 -->
+  <icon type="success" size="30px" color="green" />
+  <icon type="success" size="30" color="green" />
+  <icon type="success" size="60rpx" color="green" />
+  <icon type="success" size="200rpx" />
+  <icon style="background:grey;" type="success" size="200rpx" />
+  <!-- 原生结束 -->
+
+  <!-- 图文混排开始 -->
+  <view style="font-size:17px;margin-top:20px;">
+    文本文本文本
+    <icon type="success" size="14" color="success" />文本文本文本文本文本文本文本文本文本文本
+    <icon type="success" size="14" color="success" />
+  </view>
+  <!-- 图文混排结束 -->
+
+  <!-- 精灵图片开始 -->
+  <icon class="sprite_icon scale2"></icon>
+  <!-- 精灵图片结束 -->
+
+  <!-- 阿里云icon图片开始 -->
+  <view style="margin-top:100px">
+    <icon class="icon-close"></icon>
+    <icon class="icon-close scale2"></icon>
+    <icon class="iconfont icon-sun scale5"></icon>
+  </view>
+  <!-- 阿里云icon图片结束 -->
+
+  <!-- 矢量图开始 -->
+  <view style="margin-top:100px">
+    <icon class="svg-icon"></icon>
+  </view>
+  <!-- 矢量图结束 -->
+</view>
