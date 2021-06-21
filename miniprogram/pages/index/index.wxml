@@ -29,4 +29,10 @@
     </navigator>
   </view>
 
+  <view class="uploader">
+    <navigator url="../1.5-movable-area/index" open-type="navigate" class="uploader-text">
+      <text>1.5 可移动区域</text>
+    </navigator>
+  </view>
+
 </view>

@@ -7,8 +7,13 @@ Page({
    */
   data: {
     arr: [],
+    viewId: 5,
+    triggered: false,
+    scrollTopValue: 0,
+    pullingMessage: '下拉刷新',//下拉刷新,释放更新,加新中...
     scrollIntoViewId: '',
-    viewId: 5
+    refresherTriggered: false,//
+    tabs: []
   },
 
   /**
@@ -133,4 +138,46 @@ Page({
     }, 2000)
   },
 
+  /**
+   * 操作按钮向上滚动
+   */
+  plusScrollUpValue() {
+    this.setData({
+      scrollTopValue: this.data.scrollTopValue + 50
+    })
+  },
+
+  /**
+   * 操作顶部加一列图片
+   */
+  unshiftOnePic() {
+    let arr = this.data.arr
+    arr.unshift(arr.length + 1)
+    this.setData({
+      arr
+    })
+  },
+
+  /**
+   * 滚动到顶部触发事件
+   */
+  onScrolltoupper(e){
+    console.log('onScrolltoupper',e)
+  },
+
+  /**
+   * 被下拉
+   * @param {*} e 
+   */
+  onPulling(e) {
+    console.log('onPulling:', e)
+  },
+
+  /**
+   * 自定义下拉刷新被复位
+   * @param {*} e 
+   */
+  onRestore(e) {
+    console.log('onRestore:', e)
+  },
 })
