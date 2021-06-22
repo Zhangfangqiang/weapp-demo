@@ -66,9 +66,7 @@ movable-area {
 }
 
 /* 左侧删除3 */
-.slideViewClass {}
 
-.widget {}
 
 /*  */
 .slideViewClass .weui-cell {

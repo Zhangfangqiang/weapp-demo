@@ -31,8 +31,13 @@
 
   <view class="uploader">
     <navigator url="../1.5-movable-area/index" open-type="navigate" class="uploader-text">
-      <text>1.5 可移动区域</text>
+      <text>1.5 可移动区域 左滑删除</text>
     </navigator>
   </view>
 
+  <view class="uploader">
+    <navigator url="../1.6-wxml-to-canvas/index" open-type="navigate" class="uploader-text">
+      <text>1.6  view转化canvas转化图片</text>
+    </navigator>
+  </view>
 </view>

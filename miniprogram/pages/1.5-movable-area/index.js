@@ -1,66 +1,86 @@
-// pages/1.5-movable-area/index.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    x: 0,
+    y: 0,
+    scale: 2,
+    currentX: 0
   },
-
+  
   /**
-   * 生命周期函数--监听页面加载
+   * 弄了些初始数据
    */
-  onLoad: function (options) {
-
+  onLoad: function(){
+    this.widget = this.selectComponent('.widget')
+    this.setData({
+        icon: wx.$common.base64.icon20,
+        slideButtons: [{
+          text: '普通1',
+          src: '/images/icon_love.svg', // icon的路径
+        },{
+          text: '普通2',
+          extClass: 'test',
+          src: '/images/icon_star.svg', // icon的路径
+        },{
+          type: 'warn',
+          text: '警示3',
+          extClass: 'test',
+            src: '/images/icon_del.svg', // icon的路径
+        }],
+    });
+},
+  handleMovableChange(e) {
+    this.currentX = e.detail.x;
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  handleTouchend(e) {
+    this.isMove = true;
+    if (this.currentX < -46) {
+      this.x = -92;
+      this.setData({
+        x: this.x
+      });
+    } else {
+      this.x = 0;
+      this.setData({
+        x: this.x
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  handleTouchestart(e) {},
+  onMovableViewChange(e){
+    console.log("change",e.detail)
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  tap(e) {
+    let kind =  parseInt(e.currentTarget.dataset.kind)
+    if (!kind){
+      this.setData({
+        x: 30,
+        y: 30
+      })
+    }else{
+      this.setData({
+        x: 0,
+        y: 0
+      })
+    }
+    
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  tap2(e) {
+    let kind =  parseInt(e.currentTarget.dataset.kind)
+    if (!kind){
+      this.setData({
+        scale: 3
+      })
+    }else{
+      this.setData({
+        scale: 0
+      })
+    }
+    
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  onChange(e) {
+    console.log(e.detail)
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onScale(e) {
+    console.log(e.detail)
   }
 })

@@ -7,7 +7,7 @@
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
-    "minified": true,
+    "minified": false,
     "newFeature": true,
     "coverView": true,
     "nodeModules": true,
@@ -38,7 +38,7 @@
   },
   "appid": "wxaa39711373f5fe16",
   "projectname": "weapp-demo",
-  "libVersion": "2.14.1",
+  "libVersion": "2.17.3",
   "condition": {
     "search": {
       "list": []

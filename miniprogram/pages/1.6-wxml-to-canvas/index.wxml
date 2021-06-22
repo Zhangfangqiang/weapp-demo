@@ -1,0 +1,39 @@
+<!-- 我要渲染的view 样子开始 -->
+<view class="page-section">
+  <view class="page-section-title">wxml</view>
+  <view class="container">
+    <view class="item-box red">
+    </view>
+    <view class="item-box green">
+      <text class="text">yeah!</text>
+    </view>
+    <view class="item-box blue">
+      <image class="img"
+        src="https://cdn.nlark.com/yuque/0/2020/png/1252071/1590050624644-dd5948db-22fe-48d9-af37-8a2a9f099715.png">
+      </image>
+    </view>
+  </view>
+</view>
+<!-- 我要须髯的view 样子结束 -->
+
+<!-- 渲染结果开始 -->
+<view class="page-section">
+  <!-- wxml-to-canvas 组件开始 -->
+  <view class="page-section-title">canvas</view>
+  <wxml-to-canvas class="widget"></wxml-to-canvas>
+  <!-- wxml-to-canvas 组件结束 -->
+
+  <!-- 图片开始 -->
+  <view class="page-section-title">导出图片</view>
+  <image src="{{src}}" style="width: {{width}}px; height: {{height}}px"></image>
+  <!-- 图片结束 -->
+</view>
+<!-- 渲染结果结束 -->
+
+<!-- 操作按钮开始 -->
+<view class="btn-area">
+  <button type="primary" bindtap="renderToCanvas">渲染到canvas</button>
+  <button type="primary" bindtap="extraImage">渲染为图片</button>
+  <button type="primary" bindtap="onTapSaveBtn">保存图片</button>
+</view>
+<!-- 操作按钮结束 -->
