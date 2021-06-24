@@ -11,7 +11,10 @@
     "pages/1.7-vtabs/index",
     "pages/1.8-navigation/index",
     "pages/1.9-login/index",
-    "pages/2.0-web-view/index"
+    "pages/2.0-web-view/index",
+    "pages/2.1-slider/index",
+    "pages/2.2-select/index"
+  
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

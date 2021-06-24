@@ -24,7 +24,6 @@ Page({
     days: days,
     day: 2,
     value: [9999, 1, 1],
-
     array: ['美国', '中国', '巴西', '日本'],
     objectArray: [
       {
@@ -95,8 +94,9 @@ Page({
     region: ['广东省', '广州市', '海珠区'],
     customItem: '全部'
   },
-  onRegionChange(e) {
-    console.log('选择了', e.detail);
+  
+  onRegionChange(e){
+    console.log('选择了',e.detail);
   },
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -168,7 +168,7 @@ Page({
             break;
         }
         data.multiIndex[2] = 0;
-        console.log("columnchange", data.multiIndex);
+        console.log("columnchange",data.multiIndex);
         break;
     }
     this.setData(data);
@@ -194,19 +194,22 @@ Page({
   bindChange: function (e) {
     const val = e.detail.value
     console.log('picker-view value changed', val);
-
+    
     this.setData({
       year: this.data.years[val[0]],
       month: this.data.months[val[1]],
       day: this.data.days[val[2]]
     })
   },
-  onPickStart(e) {
+  onPickStart(e){
     console.log(e.type, e.detail);
-
+    
   },
-  onPickEnd(e) {
+  onPickEnd(e){
     console.log(e.type, e.detail);
-
+    
   }
 })
+
+
+
