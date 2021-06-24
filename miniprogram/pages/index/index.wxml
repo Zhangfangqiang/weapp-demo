@@ -52,4 +52,16 @@
       <text>1.8 navigation 手机状态栏那块</text>
     </navigator>
   </view>
+
+  <view class="uploader">
+    <navigator url="../1.9-login/index" open-type="navigate" class="uploader-text">
+      <text>1.9 登陆开始</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../2.0-web-view/index" open-type="navigate" class="uploader-text">
+      <text>2.0 web-view</text>
+    </navigator>
+  </view>
 </view>

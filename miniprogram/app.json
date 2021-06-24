@@ -9,7 +9,9 @@
     "pages/1.5-movable-area/index",
     "pages/1.6-wxml-to-canvas/index",
     "pages/1.7-vtabs/index",
-    "pages/1.8-navigation/index"
+    "pages/1.8-navigation/index",
+    "pages/1.9-login/index",
+    "pages/2.0-web-view/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
