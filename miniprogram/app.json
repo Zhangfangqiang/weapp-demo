@@ -13,8 +13,8 @@
     "pages/1.9-login/index",
     "pages/2.0-web-view/index",
     "pages/2.1-slider/index",
-    "pages/2.2-select/index"
-  
+    "pages/2.2-select/index",
+    "pages/2.3-scroll/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
