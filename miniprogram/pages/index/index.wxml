@@ -79,7 +79,25 @@
 
   <view class="uploader">
     <navigator url="../2.3-scroll/index" open-type="navigate" class="uploader-text">
-      <text>2.2 scroll 卷纸 --- 懒加载</text>
+      <text>2.3 scroll 卷纸 --- 懒加载</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../2.4-three/index" open-type="navigate" class="uploader-text">
+      <text>2.4 three 3d 动画</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../2.5-webgls/index" open-type="navigate" class="uploader-text">
+      <text>2.5 webgls 3d 动画</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../2.6-cube/index" open-type="navigate" class="uploader-text">
+      <text>2.6 cube 3d 动画</text>
     </navigator>
   </view>
 </view>
