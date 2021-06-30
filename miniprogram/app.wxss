@@ -154,3 +154,21 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+
+
+
+.page-section{
+  margin: 20px 3%;
+}
+.page-section__title{
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+.btn-area button{
+  margin-bottom: 15px;
+}
+navigator {
+  color: blue;
+}
