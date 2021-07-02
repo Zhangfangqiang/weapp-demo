@@ -1,15 +1,52 @@
 {
   "pages": [
-    "pages/3.1-wx.requext/index",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/3.1-wx.request/index",
+    "pages/3-2-tabBar/index1",
+    "pages/3-2-tabBar/index2",
+    "pages/3-2-tabBar/index3",
+    "pages/3-2-tabBar/custom/index",
+    "pages/3.3-custom-tabBar-chuanshen/index",
+    "pages/3.4-login/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "小程序demo", 
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "style": "v2",
+  "useExtendedLib": {
+    "weui": true
+  },
+  "tabBar": {
+    "custom": false,
+    "list": [
+      {
+        "pagePath": "pages/3-2-tabBar/index1",
+        "iconPath": "components/custom-tab-bar/component.png",
+        "selectedIconPath": "components/custom-tab-bar/component-on.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/3-2-tabBar/index2",
+        "iconPath": "components/custom-tab-bar/component.png",
+        "selectedIconPath": "components/custom-tab-bar/component-on.png",
+        "text": "首页2"
+      },
+      {
+        "pagePath": "pages/3-2-tabBar/index3",
+        "iconPath": "components/custom-tab-bar/component.png",
+        "selectedIconPath": "components/custom-tab-bar/component-on.png",
+        "text": "自定义"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "位置信息用途说明"
+    }
+  }
 }

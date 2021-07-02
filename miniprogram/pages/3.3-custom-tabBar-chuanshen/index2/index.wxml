@@ -1,0 +1,5 @@
+<!--miniprogram/pages/3.3-custom-tabBar-chuanshen/index2/index.wxml-->
+<text>miniprogram/pages/3.3-custom-tabBar-chuanshen/index2/index.wxml</text>
+<view>{{initData.a}}</view>
+
+<CustomTabBar index="1" bindpagenavigating="onPageNavigating"></CustomTabBar>

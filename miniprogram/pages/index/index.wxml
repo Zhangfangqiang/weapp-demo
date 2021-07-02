@@ -1,12 +1,43 @@
 <view class="container">
 
-
-  <!-- 云调用 -->
+  <!-- 网络请求开始 -->
   <view class="uploader">
-    <navigator url="../3.1-wx.requext/index" open-type="navigate" class="uploader-text">
-      <text>3.1-wx.requext</text>
+    <navigator url="../3.1-wx.request/index" open-type="navigate" class="uploader-text">
+      <text>3.1-wx.request</text>
     </navigator>
   </view>
+  <!-- 网络请求结束 -->
 
+  <!-- 配置底部导航栏目 使用了 switchTab 只有 switchTab 才可以切换到有系统底部导航的页面 开始-->
+  <view class="uploader">
+    <navigator url="../3-2-tabBar/index1" open-type="switchTab" class="uploader-text">
+      <text>3-2-tabBar</text>
+    </navigator>
+  </view>
+  <!-- 配置底部导航栏目 使用了 switchTab 只有 switchTab 才可以切换到有系统底部导航的页面 结束-->
+
+  <!-- 自定义导航传参开始 -->
+  <view class="uploader">
+    <navigator url="../3.3-custom-tabBar-chuanshen/index" open-type="navigate" class="uploader-text">
+      <text>3.3-custom-tabBar-chuanshen 自定义tabBar页面之间传参</text>
+    </navigator>
+  </view>
+  <!-- 自定义导航传参结束 -->
+
+  <!--  page扩展开始 -->
+  <view class="uploader">
+    <navigator url="../3.4-login/index" open-type="navigate" class="uploader-text">
+      <text>3.4-login 和 page扩展</text>
+    </navigator>
+  </view>
+  <!--  page扩展结束 -->
+
+  <!-- 自定义导航传参开始 -->
+  <view class="uploader">
+    <navigator url="../3.5-wifi/index" open-type="navigate" class="uploader-text">
+      <text>3.5-微信wifi登陆 </text>
+    </navigator>
+  </view>
+  <!-- 自定义导航传参结束 -->
 
 </view>

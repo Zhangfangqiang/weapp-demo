@@ -1,28 +1,67 @@
 class Event {
-	cache;
-	constructor() {
-		this.cache = {};
-	}
-	on(key, func) {
-		(this.cache[key] || (this.cache[key] = [])).push(func);
+  cache
+  
+  /**
+   * 构造方法
+   */
+  constructor() {
+    this.cache = {}
   }
-  // apply、call、bind差别
-	once(key, func) {
-		function on() {
-			this.off(key, on);
-			func.apply(this, arguments);
-		}
-		this.on.apply(this, [key, on]);
-	}
-	off(key) {
-		this.cache[key] = null;
-	}
-	emit(key, ...args) {
-		const stack = this.cache[key];
-		if (stack && stack.length > 0) {
-			stack.forEach(item => item.apply(this, args));
-		}
-	}
+
+  /**
+   * 监听
+   * @param {*} eventType 
+   * @param {*} func 
+   */
+  on(eventType, func) {
+    (this.cache[eventType] || (this.cache[eventType] = [])).push(func)
+  }
+
+  /**
+   * 移除监听
+   * @param {*} eventType 
+   * @param {*} func 
+   */
+  off(eventType, func) {
+    if (func) {
+      let stack = this.cache[eventType]
+      if (stack && stack.length > 0) {
+        for (let j = 0; j < stack.length; j++) {
+          if (stack[j] == func) {
+            stack.splice(j, 1)
+            break
+          }
+        }
+      }
+    } else {
+      delete this.cache[eventType]
+    }
+  }
+
+  /**
+   * 监听一次
+   * @param {*} eventType 
+   * @param {*} func 
+   */
+  once(eventType, func) {
+    function on() {
+      this.off(eventType, on)
+      func.apply(this, arguments)
+    }
+    this.on(eventType, on)
+  }
+
+  /**
+   * 发布订阅通知
+   * @param {*} eventType 
+   * @param  {...any} args 
+   */
+  emit(eventType, ...args) {
+    const stack = this.cache[eventType]
+    if (stack && stack.length > 0) {
+      stack.forEach(item => item.apply(this, args))
+    }
+  }
 }
 
-export default Event;
+export default Event

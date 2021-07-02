@@ -1,0 +1,8 @@
+
+<view class="page-section">
+	<view class="btn-area">
+		<button bindtap="extendPageTest" type="primary">扩展Page 并且测试登陆</button>
+	</view>
+</view>
+
+<LoginPanel show="{{showLoginPanel1}}"></LoginPanel>

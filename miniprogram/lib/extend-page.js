@@ -14,6 +14,7 @@ const extendPage = Page => {
     // 但这个方法没有什么用
     object.triggerWaitingEvent = function (type, data = {}){
       return new Promise((resolve,reject)=>{
+        console.log('11111')
         let eventCallback = res => resolve(res)
         Object.assign(data, {
           eventCallback

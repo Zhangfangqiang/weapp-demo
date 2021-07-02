@@ -1,0 +1,14 @@
+<!--miniprogram/pages/3.3-custom-tabBar-chuanshen/index.wxml-->
+<text>miniprogram/pages/3.3-custom-tabBar-chuanshen/index.wxml</text>
+
+
+
+
+<view>{{initData.a}}</view>
+
+<view style="width:100%;height:300px;">...</view>
+    <view style="width:100%;height:300px;">...</view>
+    <view style="width:100%;height:300px;">...</view>
+    <map id="map" longitude="113.324520" latitude="23.099994" scale="14" show-location style="width: 100%; height: 300px;"></map>
+
+<CustomTabBar index="0" bindpagenavigating="onPageNavigating"></CustomTabBar>

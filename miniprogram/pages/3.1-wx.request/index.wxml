@@ -1,0 +1,59 @@
+<view class="page-head">
+	<text class="page-head__title">wx.request</text>
+	<text class="page-head__desc">网络请求</text>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.1 接口调用及返回</text>
+	<view class="btn-area">
+		<button bindtap="startOneRequest" type="primary">发起</button>
+	</view>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.2 在登陆之后调用接口</text>
+	<view class="btn-area">
+		<button bindgetuserinfo="startLoginAndRequest3" open-type="getUserInfo" type="primary">先登陆后请求</button>
+		<navigator style="text-align: center;margin: 0 auto;background-color: #07c160; width: 184px; padding: 8px 0px;line-height: 1.41176471;border-radius: 4px;font-weight: 700;font-size: 17px;" url="./other/index">other</navigator>
+	</view>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.4 Promise</text>
+	<view class="btn-area">
+		<button bindtap="any" type="primary">any 一个成功全体成功</button>
+		<button bindtap="all" type="primary">all 全体一致算成功</button>
+		<button bindtap="race" type="primary">race 所有任务执行完毕成功</button>
+		<button bindgetuserinfo="startLoginAndRequestWithPromise1"  open-type="getUserInfo" type="primary">先登陆后请求(promise)</button>
+		<button bindgetuserinfo="startLoginAndRequestWithPromise2" open-type="getUserInfo" type="primary">先登陆后请求2(promise)</button>
+		<button bindgetuserinfo="startLoginAndRequestWithPromise3" open-type="getUserInfo" type="primary">先登陆后请求3(promise)</button>
+	</view>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.6 模块化</text>
+	<view class="btn-area">
+		<button bindtap="requestOneHomeApi" type="primary">请求user/home接口</button>
+	</view>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.7 接口调用融合登陆</text>
+	<view class="btn-area">
+		<button bindtap="showLoginPanel1" type="primary">手动开启登陆</button>
+		<LoginPanel1 show="{{showLoginPanel1}}"></LoginPanel1>
+		<button bindtap="showLoginPanel2" type="primary">手动打开登录面板</button>
+		<LoginPanel2 show="{{showLoginPanel2}}"></LoginPanel2>
+		<view style="height:20px;"></view>
+		<button bindtap="requestHomeApi" type="primary">请求user/home接口</button>
+		<button bindtap="requestHomeApiByReq4" type="primary">请求接口by req4</button>
+	</view>
+</view>
+
+<view class="page-section">
+	<text class="page-section__title">3.8 Event</text>
+	<view class="btn-area">
+		<button bindtap="testEvent" type="primary">test event</button>
+	</view>
+</view>
+

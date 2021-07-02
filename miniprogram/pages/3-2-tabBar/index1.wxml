@@ -1,0 +1,29 @@
+<view class="page-section">
+	<text class="page-section__title">3.10 原生tabBar</text>
+</view>
+
+<view class="container">
+	<view class="uploader">
+		<navigator class="uploader-text" url="/pages/3-2-tabBar/index2" open-type="navigate">
+			<text>navigate 跳转到 index2</text>
+		</navigator>
+	</view>
+	<view class="uploader">
+		<navigator class="uploader-text" url="/pages/3-2-tabBar/index2" open-type="switchTab">
+			<text>switchtab 跳转到 index2</text>
+		</navigator>
+	</view>
+	<view class="uploader">
+		<navigator class="uploader-text" url="/pages/3-2-tabBar/custom/index">
+			<text>navigate 跳转到自定义导航 custom/index</text>
+		</navigator>
+	</view>
+
+	<view class="page-section">
+		<view style="width:100%;height:300px;">...</view>
+		<view style="width:100%;height:300px;">...</view>
+		<view style="width:100%;height:300px;">...</view>
+		<map id="map" longitude="113.324520" latitude="23.099994" scale="14" show-location
+			style="width: 100%; height: 300px;"></map>
+	</view>
+</view>

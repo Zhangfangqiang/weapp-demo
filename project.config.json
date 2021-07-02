@@ -10,7 +10,7 @@
     "minified": true,
     "newFeature": true,
     "coverView": true,
-    "nodeModules": false,
+    "nodeModules": true,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
@@ -37,7 +37,7 @@
   },
   "appid": "wxaa39711373f5fe16",
   "projectname": "weapp-demo",
-  "libVersion": "2.14.1",
+  "libVersion": "2.18.0",
   "condition": {
     "search": {
       "list": []
