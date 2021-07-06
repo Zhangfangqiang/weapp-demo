@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/category/index",
+    "pages/goods/index",
     "pages/index/index"
   ],
   "window": {
@@ -9,6 +11,5 @@
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "sitemapLocation": "sitemap.json"
 }

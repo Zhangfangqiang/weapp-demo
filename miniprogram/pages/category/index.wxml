@@ -1,0 +1,29 @@
+<!-- 骨架屏开始 -->
+<import src="./index.skeleton.wxml" />
+<!-- 骨架屏结束 -->
+
+<template is="skeleton" wx-if="{{loading}}"></template>
+
+<mp-vtabs wx-else vtabs="{{vtabs}}" activeTab="{{activeTab}}" bindtabclick="onTabCLick" bindchange="onChange" class="test" id="category-vtabs" bindscrolltoindexlower="onScrollToIndexLower">
+	<block wx:for="{{vtabs}}" wx:key="title">
+		<mp-vtabs-content id="goods-content{{index}}" tabIndex="{{index}}">
+			<view class="vtabs-content-item">
+				<!-- 大标题开始 -->
+				<view style="line-height:50px;background-color: rgba(255,255,255,1);text-align: center;">
+				{{item.title}}
+				</view>
+				<!-- 大标题结束 -->
+
+				<!-- 内容循环开始 -->
+				<view wx:for="{{goodsListMap[item.id].rows}}" wx:for-index="index2" wx:for-item="item2" wx:key="id">
+					<van-card bindtap="onTapGoods" data-id="{{item2.id}}" price="{{item2.start_price}}" desc="{{item2.goods_desc}}"
+						title="{{item2.goods_name}}" thumb="{{ item2.goods_infos[0].content }}">
+						<view slot="footer">
+						</view>
+					</van-card>
+				</view>
+				<!-- 内容循环结束 -->
+			</view>
+		</mp-vtabs-content>
+	</block>
+</mp-vtabs>
