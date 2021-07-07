@@ -3,21 +3,31 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var component_1 = require('../common/component');
 var touch_1 = require('../mixins/touch');
 var utils_1 = require('../common/utils');
-var validator_1 = require('../common/validator');
-var relation_1 = require('../common/relation');
 component_1.VantComponent({
   mixins: [touch_1.touch],
   classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
-  relation: relation_1.useChildren('tab', function () {
-    this.updateTabs();
-  }),
+  relation: {
+    name: 'tab',
+    type: 'descendant',
+    current: 'tabs',
+    linked: function (target) {
+      target.index = this.children.length - 1;
+      this.updateTabs();
+    },
+    unlinked: function () {
+      this.children = this.children.map(function (child, index) {
+        child.index = index;
+        return child;
+      });
+      this.updateTabs();
+    },
+  },
   props: {
+    color: {
+      type: String,
+      observer: 'setLine',
+    },
     sticky: Boolean,
-    border: Boolean,
-    swipeable: Boolean,
-    titleActiveColor: String,
-    titleInactiveColor: String,
-    color: String,
     animated: {
       type: Boolean,
       observer: function () {
@@ -27,22 +37,23 @@ component_1.VantComponent({
         });
       },
     },
+    swipeable: Boolean,
     lineWidth: {
-      type: null,
-      value: 40,
-      observer: 'resize',
+      type: [String, Number],
+      value: -1,
+      observer: 'setLine',
     },
     lineHeight: {
-      type: null,
+      type: [String, Number],
       value: -1,
+      observer: 'setLine',
     },
+    titleActiveColor: String,
+    titleInactiveColor: String,
     active: {
-      type: null,
+      type: [String, Number],
       value: 0,
       observer: function (name) {
-        if (!this.skipInit) {
-          this.skipInit = true;
-        }
         if (name !== this.getCurrentName()) {
           this.setCurrentIndexByName(name);
         }
@@ -51,6 +62,10 @@ component_1.VantComponent({
     type: {
       type: String,
       value: 'line',
+    },
+    border: {
+      type: Boolean,
+      value: true,
     },
     ellipsis: {
       type: Boolean,
@@ -66,7 +81,7 @@ component_1.VantComponent({
     },
     swipeThreshold: {
       type: Number,
-      value: 5,
+      value: 4,
       observer: function (value) {
         this.setData({
           scrollable: this.children.length > value || !this.data.ellipsis,
@@ -84,29 +99,29 @@ component_1.VantComponent({
   },
   data: {
     tabs: [],
+    lineStyle: '',
     scrollLeft: 0,
     scrollable: false,
-    currentIndex: 0,
+    trackStyle: '',
+    currentIndex: null,
     container: null,
-    skipTransition: true,
-    scrollWithAnimation: false,
-    lineOffsetLeft: 0,
   },
   mounted: function () {
     var _this = this;
-    utils_1.requestAnimationFrame(function () {
-      _this.setData({
+    wx.nextTick(function () {
+      _this.setLine(true);
+      _this.scrollIntoView();
+    });
+  },
+  methods: {
+    updateContainer: function () {
+      var _this = this;
+      this.setData({
         container: function () {
           return _this.createSelectorQuery().select('.van-tabs');
         },
       });
-      if (!_this.skipInit) {
-        _this.resize();
-        _this.scrollIntoView();
-      }
-    });
-  },
-  methods: {
+    },
     updateTabs: function () {
       var _a = this,
         _b = _a.children,
@@ -119,12 +134,12 @@ component_1.VantComponent({
         scrollable:
           this.children.length > data.swipeThreshold || !data.ellipsis,
       });
-      this.setCurrentIndexByName(data.active || this.getCurrentName());
+      this.setCurrentIndexByName(this.getCurrentName() || data.active);
     },
     trigger: function (eventName, child) {
       var currentIndex = this.data.currentIndex;
       var currentChild = child || this.children[currentIndex];
-      if (!validator_1.isDef(currentChild)) {
+      if (!utils_1.isDef(currentChild)) {
         return;
       }
       this.$emit(eventName, {
@@ -141,7 +156,7 @@ component_1.VantComponent({
         this.trigger('disabled', child);
       } else {
         this.setCurrentIndex(index);
-        utils_1.nextTick(function () {
+        wx.nextTick(function () {
           _this.trigger('click');
         });
       }
@@ -164,30 +179,27 @@ component_1.VantComponent({
         _b = _a.children,
         children = _b === void 0 ? [] : _b;
       if (
-        !validator_1.isDef(currentIndex) ||
+        !utils_1.isDef(currentIndex) ||
         currentIndex >= children.length ||
         currentIndex < 0
       ) {
         return;
       }
-      utils_1.groupSetData(this, function () {
-        children.forEach(function (item, index) {
-          var active = index === currentIndex;
-          if (active !== item.data.active || !item.inited) {
-            item.updateRender(active, _this);
-          }
-        });
+      children.forEach(function (item, index) {
+        var active = index === currentIndex;
+        if (active !== item.data.active || !item.inited) {
+          item.updateRender(active, _this);
+        }
       });
       if (currentIndex === data.currentIndex) {
         return;
       }
       var shouldEmitChange = data.currentIndex !== null;
       this.setData({ currentIndex: currentIndex });
-      utils_1.requestAnimationFrame(function () {
-        _this.resize();
+      wx.nextTick(function () {
+        _this.setLine();
         _this.scrollIntoView();
-      });
-      utils_1.nextTick(function () {
+        _this.updateContainer();
         _this.trigger('input');
         if (shouldEmitChange) {
           _this.trigger('change');
@@ -200,39 +212,61 @@ component_1.VantComponent({
         return activeTab.getComputedName();
       }
     },
-    resize: function () {
+    setLine: function (skipTransition) {
       var _this = this;
       if (this.data.type !== 'line') {
         return;
       }
       var _a = this.data,
+        color = _a.color,
+        duration = _a.duration,
         currentIndex = _a.currentIndex,
-        ellipsis = _a.ellipsis,
-        skipTransition = _a.skipTransition;
-      Promise.all([
-        utils_1.getAllRect(this, '.van-tab'),
-        utils_1.getRect(this, '.van-tabs__line'),
-      ]).then(function (_a) {
-        var _b = _a[0],
-          rects = _b === void 0 ? [] : _b,
-          lineRect = _a[1];
+        lineWidth = _a.lineWidth,
+        lineHeight = _a.lineHeight;
+      this.getRect('.van-tab', true).then(function (rects) {
+        if (rects === void 0) {
+          rects = [];
+        }
         var rect = rects[currentIndex];
         if (rect == null) {
           return;
         }
-        var lineOffsetLeft = rects
-          .slice(0, currentIndex)
-          .reduce(function (prev, curr) {
-            return prev + curr.width;
-          }, 0);
-        lineOffsetLeft +=
-          (rect.width - lineRect.width) / 2 + (ellipsis ? 0 : 8);
-        _this.setData({ lineOffsetLeft: lineOffsetLeft });
-        if (skipTransition) {
-          utils_1.nextTick(function () {
-            _this.setData({ skipTransition: false });
-          });
-        }
+        var width = lineWidth !== -1 ? lineWidth : rect.width / 2;
+        var height =
+          lineHeight !== -1
+            ? 'height: ' +
+              utils_1.addUnit(lineHeight) +
+              '; border-radius: ' +
+              utils_1.addUnit(lineHeight) +
+              ';'
+            : '';
+        var left = rects.slice(0, currentIndex).reduce(function (prev, curr) {
+          return prev + curr.width;
+        }, 0);
+        left += (rect.width - width) / 2;
+        var transition = skipTransition
+          ? ''
+          : 'transition-duration: ' +
+            duration +
+            's; -webkit-transition-duration: ' +
+            duration +
+            's;';
+        _this.setData({
+          lineStyle:
+            '\n            ' +
+            height +
+            '\n            width: ' +
+            utils_1.addUnit(width) +
+            ';\n            background-color: ' +
+            color +
+            ';\n            -webkit-transform: translateX(' +
+            left +
+            'px);\n            transform: translateX(' +
+            left +
+            'px);\n            ' +
+            transition +
+            '\n          ',
+        });
       });
     },
     // scroll active tab into view
@@ -240,14 +274,13 @@ component_1.VantComponent({
       var _this = this;
       var _a = this.data,
         currentIndex = _a.currentIndex,
-        scrollable = _a.scrollable,
-        scrollWithAnimation = _a.scrollWithAnimation;
+        scrollable = _a.scrollable;
       if (!scrollable) {
         return;
       }
       Promise.all([
-        utils_1.getAllRect(this, '.van-tab'),
-        utils_1.getRect(this, '.van-tabs__nav'),
+        this.getRect('.van-tab', true),
+        this.getRect('.van-tabs__nav'),
       ]).then(function (_a) {
         var tabRects = _a[0],
           navRect = _a[1];
@@ -260,11 +293,6 @@ component_1.VantComponent({
         _this.setData({
           scrollLeft: offsetLeft - (navRect.width - tabRect.width) / 2,
         });
-        if (!scrollWithAnimation) {
-          utils_1.nextTick(function () {
-            _this.setData({ scrollWithAnimation: true });
-          });
-        }
       });
     },
     onTouchScroll: function (event) {
@@ -281,39 +309,21 @@ component_1.VantComponent({
     // watch swipe touch end
     onTouchEnd: function () {
       if (!this.data.swipeable) return;
-      var _a = this,
-        direction = _a.direction,
-        deltaX = _a.deltaX,
-        offsetX = _a.offsetX;
-      var minSwipeDistance = 50;
-      if (direction === 'horizontal' && offsetX >= minSwipeDistance) {
-        var index = this.getAvaiableTab(deltaX);
-        if (index !== -1) {
-          this.setCurrentIndex(index);
-        }
-      }
-    },
-    getAvaiableTab: function (direction) {
       var _a = this.data,
         tabs = _a.tabs,
         currentIndex = _a.currentIndex;
-      var step = direction > 0 ? -1 : 1;
-      for (
-        var i = step;
-        currentIndex + i < tabs.length && currentIndex + i >= 0;
-        i += step
-      ) {
-        var index = currentIndex + i;
-        if (
-          index >= 0 &&
-          index < tabs.length &&
-          tabs[index] &&
-          !tabs[index].disabled
-        ) {
-          return index;
+      var _b = this,
+        direction = _b.direction,
+        deltaX = _b.deltaX,
+        offsetX = _b.offsetX;
+      var minSwipeDistance = 50;
+      if (direction === 'horizontal' && offsetX >= minSwipeDistance) {
+        if (deltaX > 0 && currentIndex !== 0) {
+          this.setCurrentIndex(currentIndex - 1);
+        } else if (deltaX < 0 && currentIndex !== tabs.length - 1) {
+          this.setCurrentIndex(currentIndex + 1);
         }
       }
-      return -1;
     },
   },
 });

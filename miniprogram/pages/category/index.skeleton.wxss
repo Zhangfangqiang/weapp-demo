@@ -1,13 +1,19 @@
 /*
-此文件为开发者工具生成，生成时间: 2020/8/30 下午1:56:06 
-使用方法：参考 "pages/category/index.skeleton.wxml"
+此文件为开发者工具生成，生成时间: 2021/7/7 下午12:54:04
+
+在 D:\Documents\code\weiapp\weapp-demo\miniprogram\pages\category\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 */
 .sk-transparent {
     color: transparent !important;
   }
-.sk-text-18-7500-640 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-710 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
 .sk-text {
@@ -17,104 +23,109 @@
     color: transparent !important;
     background-repeat: repeat-y !important;
   }
-.sk-text-18-7500-828 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-857 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-18-7500-870 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-906 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-18-7500-406 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-101 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-18-7500-769 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-282 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-18-7500-750 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-543 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-18-7500-711 {
-    background-image: linear-gradient(transparent 18.7500%, #EEEEEE 0%, #EEEEEE 81.2500%, transparent 0%) !important;
-    background-size: 100% 1.4000rem;
+.sk-text-14-2857-566 {
+    background-image: linear-gradient(transparent 14.2857%, #EEEEEE 0%, #EEEEEE 85.7143%, transparent 0%) !important;
+    background-size: 100% 35.5072rpx;
     position: relative !important;
   }
-.sk-text-34-0000-183 {
+.sk-text-34-0000-196 {
     background-image: linear-gradient(transparent 34.0000%, #EEEEEE 0%, #EEEEEE 66.0000%, transparent 0%) !important;
-    background-size: 100% 3.1250rem;
+    background-size: 100% 90.5797rpx;
     position: relative !important;
   }
-.sk-text-12-5000-76 {
+.sk-text-12-5000-650 {
     background-image: linear-gradient(transparent 12.5000%, #EEEEEE 0%, #EEEEEE 87.5000%, transparent 0%) !important;
-    background-size: 100% 1.0000rem;
+    background-size: 100% 28.9855rpx;
     position: relative !important;
   }
-.sk-text-10-0000-25 {
-    background-image: linear-gradient(transparent 10.0000%, #EEEEEE 0%, #EEEEEE 90.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
-    position: relative !important;
-  }
-.sk-text-20-0000-98 {
+.sk-text-20-0000-489 {
     background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-12-5000-35 {
-    background-image: linear-gradient(transparent 12.5000%, #EEEEEE 0%, #EEEEEE 87.5000%, transparent 0%) !important;
-    background-size: 100% 1.0000rem;
-    position: relative !important;
-  }
-.sk-text-10-0000-320 {
+.sk-text-10-0000-373 {
     background-image: linear-gradient(transparent 10.0000%, #EEEEEE 0%, #EEEEEE 90.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-20-0000-699 {
+.sk-text-20-0000-220 {
     background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-12-5000-214 {
+.sk-text-12-5000-870 {
     background-image: linear-gradient(transparent 12.5000%, #EEEEEE 0%, #EEEEEE 87.5000%, transparent 0%) !important;
-    background-size: 100% 1.0000rem;
+    background-size: 100% 28.9855rpx;
     position: relative !important;
   }
-.sk-text-10-0000-662 {
+.sk-text-20-0000-320 {
+    background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
+    background-size: 100% 36.2319rpx;
+    position: relative !important;
+  }
+.sk-text-10-0000-715 {
     background-image: linear-gradient(transparent 10.0000%, #EEEEEE 0%, #EEEEEE 90.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-20-0000-431 {
+.sk-text-20-0000-869 {
     background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-12-5000-328 {
+.sk-text-12-5000-908 {
     background-image: linear-gradient(transparent 12.5000%, #EEEEEE 0%, #EEEEEE 87.5000%, transparent 0%) !important;
-    background-size: 100% 1.0000rem;
+    background-size: 100% 28.9855rpx;
     position: relative !important;
   }
-.sk-text-10-0000-131 {
+.sk-text-20-0000-895 {
+    background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
+    background-size: 100% 36.2319rpx;
+    position: relative !important;
+  }
+.sk-text-10-0000-340 {
     background-image: linear-gradient(transparent 10.0000%, #EEEEEE 0%, #EEEEEE 90.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-20-0000-419 {
+.sk-text-20-0000-728 {
     background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
-    background-size: 100% 1.2500rem;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
-.sk-text-12-5000-479 {
+.sk-text-12-5000-524 {
     background-image: linear-gradient(transparent 12.5000%, #EEEEEE 0%, #EEEEEE 87.5000%, transparent 0%) !important;
-    background-size: 100% 1.0000rem;
+    background-size: 100% 28.9855rpx;
+    position: relative !important;
+  }
+.sk-text-20-0000-556 {
+    background-image: linear-gradient(transparent 20.0000%, #EEEEEE 0%, #EEEEEE 80.0000%, transparent 0%) !important;
+    background-size: 100% 36.2319rpx;
     position: relative !important;
   }
 .sk-image {
@@ -134,11 +145,10 @@
     }
 .sk-container {
     position: absolute;
-    overflow: hidden;
-    top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000000;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     background-color: transparent;
   }

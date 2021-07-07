@@ -22,16 +22,12 @@ component_1.VantComponent({
       observer: 'updateSubItems',
     },
     height: {
-      type: null,
+      type: [Number, String],
       value: 300,
     },
     max: {
       type: Number,
       value: Infinity,
-    },
-    selectedIcon: {
-      type: String,
-      value: 'success',
     },
   },
   data: {
@@ -67,7 +63,7 @@ component_1.VantComponent({
         mainActiveIndex = _a.mainActiveIndex;
       var _b = (items[mainActiveIndex] || {}).children,
         children = _b === void 0 ? [] : _b;
-      this.setData({ subItems: children });
+      return this.set({ subItems: children });
     },
   },
 });

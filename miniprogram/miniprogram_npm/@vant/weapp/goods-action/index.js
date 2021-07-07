@@ -1,17 +1,35 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 var component_1 = require('../common/component');
-var relation_1 = require('../common/relation');
 component_1.VantComponent({
-  relation: relation_1.useChildren('goods-action-button', function () {
-    this.children.forEach(function (item) {
-      item.updateStyle();
-    });
-  }),
+  relation: {
+    type: 'descendant',
+    name: 'goods-action-button',
+    current: 'goods-action',
+    linked: function () {
+      this.updateStyle();
+    },
+    unlinked: function () {
+      this.updateStyle();
+    },
+    linkChanged: function () {
+      this.updateStyle();
+    },
+  },
   props: {
     safeAreaInsetBottom: {
       type: Boolean,
       value: true,
+    },
+  },
+  methods: {
+    updateStyle: function () {
+      var _this = this;
+      wx.nextTick(function () {
+        _this.children.forEach(function (child) {
+          child.updateStyle();
+        });
+      });
     },
   },
 });

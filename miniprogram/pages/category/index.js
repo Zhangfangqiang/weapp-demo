@@ -12,7 +12,7 @@ Page({
    * 页面初始化加载加载了一些数据
    */
   async onLoad() {
-    let categories = await wx.wxp.request({ url: 'http://localhost:3000/api/category/index' })
+    let categories = await wx.wxp.requestT({ url: 'http://localhost:3000/api/category/index' })
     if (categories) { categories = categories.data.data }
     let vtabs = []
 
@@ -34,7 +34,7 @@ Page({
   async onTapGoods(e) {
     wx.showLoading({ title: 'Loading..' })
     let goodsId = e.currentTarget.dataset.id      
-    let goods   = await wx.wxp.request({url: `http://localhost:3000/api/goods/index/${goodsId}`})
+    let goods   = await wx.wxp.requestT({url: `http://localhost:3000/api/goods/${goodsId}`})
 
     /*如果数据存在切换到详情页面*/
     if (goods) {
@@ -78,7 +78,7 @@ Page({
       }
     }
 
-    let goodsData = await wx.wxp.request({
+    let goodsData = await wx.wxp.requestT({
       url: `http://localhost:3000/api/goods/index?page_index=${pageIndex}&page_size=${pageSize}&category_id=${categoryId}`,
     })
 
@@ -103,10 +103,14 @@ Page({
     this.reClacChildHeight(index)
   },
 
+  /**
+   * 根据屏幕滚动的位置
+   * @param {*} e 
+   */
   onScrollToIndexLower(e) {
-    console.log("scroll to index lower", e.detail);
+    console.log('onScrollToIndexLower:',e)
     let index = e.detail.index;
-    // 这是一个多发事件
+    //获取数据
     if (index != this.data.lastIndexForLoadMore) {
       let cate = this.data.vtabs[index]
       let categoryId = cate.id
@@ -120,7 +124,8 @@ Page({
    * @param {*} index 
    */
   onCategoryChanged(index) {
-    let cate = this.data.vtabs[index]
+    console.log('onCategoryChanged:',index)
+    let cate        = this.data.vtabs[index]
     let category_id = cate.id
     if (!this.data.goodsListMap[category_id]) {
       this.getGoodsListByCategory(category_id, index)
@@ -132,8 +137,8 @@ Page({
    * @param {*} e 
    */
   onTabCLick(e) {
+    console.log('onTabCLick:',e)
     const index = e.detail.index
-    console.log('点击导航', index)
     this.onCategoryChanged(index)
   },
 
@@ -142,8 +147,8 @@ Page({
    * @param {*} e 
    */
   onChange(e) {
+    console.log('onChange',e)
     const index = e.detail.index
-    console.log('change', index)
     this.onCategoryChanged(index)
   }
 

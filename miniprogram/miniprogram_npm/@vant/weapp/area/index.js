@@ -17,8 +17,7 @@ var __assign =
 Object.defineProperty(exports, '__esModule', { value: true });
 var component_1 = require('../common/component');
 var shared_1 = require('../picker/shared');
-var utils_1 = require('../common/utils');
-var EMPTY_CODE = '000000';
+var COLUMNSPLACEHOLDERCODE = '000000';
 component_1.VantComponent({
   classes: ['active-class', 'toolbar-class', 'column-class'],
   props: __assign(__assign({}, shared_1.pickerProps), {
@@ -37,6 +36,11 @@ component_1.VantComponent({
     columnsNum: {
       type: null,
       value: 3,
+      observer: function (value) {
+        this.setData({
+          displayColumns: this.data.columns.slice(0, +value),
+        });
+      },
     },
     columnsPlaceholder: {
       type: Array,
@@ -53,13 +57,14 @@ component_1.VantComponent({
   }),
   data: {
     columns: [{ values: [] }, { values: [] }, { values: [] }],
+    displayColumns: [{ values: [] }, { values: [] }, { values: [] }],
     typeToColumnsPlaceholder: {},
   },
   mounted: function () {
     var _this = this;
-    utils_1.requestAnimationFrame(function () {
+    setTimeout(function () {
       _this.setValues();
-    });
+    }, 0);
   },
   methods: {
     getPicker: function () {
@@ -74,7 +79,7 @@ component_1.VantComponent({
     onConfirm: function (event) {
       var index = event.detail.index;
       var value = event.detail.value;
-      value = this.parseValues(value);
+      value = this.parseOutputValues(value);
       this.emit('confirm', { value: value, index: index });
     },
     emit: function (type, detail) {
@@ -82,53 +87,53 @@ component_1.VantComponent({
       delete detail.value;
       this.$emit(type, detail);
     },
-    parseValues: function (values) {
+    // parse output columns data
+    parseOutputValues: function (values) {
       var columnsPlaceholder = this.data.columnsPlaceholder;
       return values.map(function (value, index) {
-        if (
-          value &&
-          (!value.code || value.name === columnsPlaceholder[index])
-        ) {
-          return __assign(__assign({}, value), { code: '', name: '' });
+        // save undefined value
+        if (!value) return value;
+        value = JSON.parse(JSON.stringify(value));
+        if (!value.code || value.name === columnsPlaceholder[index]) {
+          value.code = '';
+          value.name = '';
         }
         return value;
       });
     },
     onChange: function (event) {
       var _this = this;
-      var _a;
-      var _b = event.detail,
-        index = _b.index,
-        picker = _b.picker,
-        value = _b.value;
+      var _a = event.detail,
+        index = _a.index,
+        picker = _a.picker,
+        value = _a.value;
       this.code = value[index].code;
-      (_a = this.setValues()) === null || _a === void 0
-        ? void 0
-        : _a.then(function () {
-            _this.$emit('change', {
-              picker: picker,
-              values: _this.parseValues(picker.getValues()),
-              index: index,
-            });
-          });
+      this.setValues().then(function () {
+        _this.$emit('change', {
+          picker: picker,
+          values: _this.parseOutputValues(picker.getValues()),
+          index: index,
+        });
+      });
     },
     getConfig: function (type) {
       var areaList = this.data.areaList;
       return (areaList && areaList[type + '_list']) || {};
     },
     getList: function (type, code) {
-      if (type !== 'province' && !code) {
-        return [];
-      }
       var typeToColumnsPlaceholder = this.data.typeToColumnsPlaceholder;
+      var result = [];
+      if (type !== 'province' && !code) {
+        return result;
+      }
       var list = this.getConfig(type);
-      var result = Object.keys(list).map(function (code) {
+      result = Object.keys(list).map(function (code) {
         return {
           code: code,
           name: list[code],
         };
       });
-      if (code != null) {
+      if (code) {
         // oversea code
         if (code[0] === '9' && type === 'city') {
           code = '9';
@@ -143,8 +148,8 @@ component_1.VantComponent({
           type === 'province'
             ? ''
             : type === 'city'
-            ? EMPTY_CODE.slice(2, 4)
-            : EMPTY_CODE.slice(4, 6);
+            ? COLUMNSPLACEHOLDERCODE.slice(2, 4)
+            : COLUMNSPLACEHOLDERCODE.slice(4, 6);
         result.unshift({
           code: '' + code + codeFill,
           name: typeToColumnsPlaceholder[type],
@@ -168,28 +173,37 @@ component_1.VantComponent({
       return 0;
     },
     setValues: function () {
+      var county = this.getConfig('county');
+      var code = this.code;
+      if (!code) {
+        if (this.data.columnsPlaceholder.length) {
+          code = COLUMNSPLACEHOLDERCODE;
+        } else if (Object.keys(county)[0]) {
+          code = Object.keys(county)[0];
+        } else {
+          code = '';
+        }
+      }
+      var province = this.getList('province');
+      var city = this.getList('city', code.slice(0, 2));
       var picker = this.getPicker();
       if (!picker) {
         return;
       }
-      var code = this.code || this.getDefaultCode();
-      var provinceList = this.getList('province');
-      var cityList = this.getList('city', code.slice(0, 2));
       var stack = [];
       var indexes = [];
-      var columnsNum = this.data.columnsNum;
-      if (columnsNum >= 1) {
-        stack.push(picker.setColumnValues(0, provinceList, false));
+      if (this.data.columnsNum >= 1) {
+        stack.push(picker.setColumnValues(0, province, false));
         indexes.push(this.getIndex('province', code));
       }
-      if (columnsNum >= 2) {
-        stack.push(picker.setColumnValues(1, cityList, false));
-        indexes.push(this.getIndex('city', code));
-        if (cityList.length && code.slice(2, 4) === '00') {
-          code = cityList[0].code;
+      if (this.data.columnsNum >= 2) {
+        stack.push(picker.setColumnValues(1, city, false));
+        indexes.push(this.getIndex('province', code));
+        if (city.length && code.slice(2, 4) === '00') {
+          code = city[0].code;
         }
       }
-      if (columnsNum === 3) {
+      if (this.data.columnsNum === 3) {
         stack.push(
           picker.setColumnValues(
             2,
@@ -197,7 +211,6 @@ component_1.VantComponent({
             false
           )
         );
-        indexes.push(this.getIndex('county', code));
       }
       return Promise.all(stack)
         .catch(function () {})
@@ -206,31 +219,13 @@ component_1.VantComponent({
         })
         .catch(function () {});
     },
-    getDefaultCode: function () {
-      var columnsPlaceholder = this.data.columnsPlaceholder;
-      if (columnsPlaceholder.length) {
-        return EMPTY_CODE;
-      }
-      var countyCodes = Object.keys(this.getConfig('county'));
-      if (countyCodes[0]) {
-        return countyCodes[0];
-      }
-      var cityCodes = Object.keys(this.getConfig('city'));
-      if (cityCodes[0]) {
-        return cityCodes[0];
-      }
-      return '';
-    },
     getValues: function () {
       var picker = this.getPicker();
-      if (!picker) {
-        return [];
-      }
-      return this.parseValues(
-        picker.getValues().filter(function (value) {
-          return !!value;
-        })
-      );
+      return picker
+        ? picker.getValues().filter(function (value) {
+            return !!value;
+          })
+        : [];
     },
     getDetail: function () {
       var values = this.getValues();

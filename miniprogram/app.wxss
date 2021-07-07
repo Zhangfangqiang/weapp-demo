@@ -1,1 +1,3 @@
-@import '/miniprogram_npm/@vant/weapp/common/index.wxss';   /*引入vant样式*/
+/* @import '@vant/weapp/common/index.wxss'; */
+@import '/miniprogram_npm/@vant/weapp/common/index.wxss';
+@import './static/style/icon.wxss';

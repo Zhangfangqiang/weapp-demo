@@ -5,66 +5,63 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showLoginPanel:false,
+    showLoginPanel: false,
     showSkuPanel: false,
-    goodsId:0,
-    goodsData:{},
+    goodsId: 0,
+    goodsData: {},
     goodsImages: [],
-    goodsContentInfo:{},
-    goodsSkuData:{},
-    selectedGoodsSku:{},
-    selectedAttrValue:{},
-    selectedGoodsSkuObject:{}
+    goodsContentInfo: {},
+    goodsSkuData: {},
+    selectedGoodsSku: {},
+    selectedAttrValue: {},
+    selectedGoodsSkuObject: {}
   },
 
-    // 测试返回对象
-    // requestHomeApiByReq4(e){
-    //   getApp().wxp.request4({
-    //     url: 'http://localhost:3000/user/home',
-    //     onReturnObject(rtn){
-    //       // rtn.abort()
-    //     }
-    //   }).catch(err=>{
-    //     console.log(err);
-    //   })
-    // },
-
-    async addToCart(e){
-      if (!this.data.selectedGoodsSkuObject.sku){
-        wx.showModal({
-          title: '请选择商品规格',
-          showCancel: false
-        })
-        this.showSkuPanelPopup()
-        return
-      }
-      let goods_id = this.data.goodsId
-      let goods_sku_id = this.data.selectedGoodsSkuObject.sku.id 
-      let goods_sku_desc = this.data.selectedGoodsSkuObject.text
-      let data = {
-        goods_id,
-        goods_sku_id,
-        goods_sku_desc
-      }
-      let res = await getApp().wxp.request4({
-        url:'http://localhost:3000/user/my/carts',
-        method:'post',
-        data
+  /**
+   * 添加到购物车
+   * @param {*} e 
+   */
+  async addToCart(e) {
+    if (!this.data.selectedGoodsSkuObject.sku) {
+      wx.showModal({
+        title: '请选择商品规格',
+        showCancel: false
       })
-      if (res.data.msg == 'ok'){
-        wx.showToast({
-          title: '已添加',
-        })
-      }
-    },
+      this.showSkuPanelPopup()
+      return
+    }
+    let goods_id = this.data.goodsId
+    let goods_sku_id = this.data.selectedGoodsSkuObject.sku.id
+    let goods_sku_desc = this.data.selectedGoodsSkuObject.text
+    let data = {
+      goods_id,
+      goods_sku_id,
+      goods_sku_desc
+    }
+    let res = await getApp().wxp.request4({
+      url: 'http://localhost:3000/user/my/carts',
+      method: 'post',
+      data
+    })
+    if (res.data.msg == 'ok') {
+      wx.showToast({
+        title: '已添加',
+      })
+    }
+  },
 
-    // 显示规格面板
-    showSkuPanelPopup() {
-      this.setData({ showSkuPanel: true });
-    },
+  /**
+   * 点击选择规格按钮
+   * 显示规格面板
+   */
+  showSkuPanelPopup() {
+    this.setData({ showSkuPanel: true });
+  },
 
-      // 关闭规格面板
-  onCloseSkuPanel(){
+  /**
+   * 关闭规格面板
+   */
+  onCloseSkuPanel() {
     this.setData({ showSkuPanel: false });
   },
 
@@ -72,88 +69,83 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    let goodsId = options.goodsId
+    const eventChannel = this.getOpenerEventChannel()    /*打开事件频道*/
+    let goodsId = options.goodsId                 /*获取路由传递的goodsId*/
     this.data.goodsId = goodsId
-    const eventChannel = this.getOpenerEventChannel()
-    eventChannel.on('goodsData', (res)=> {
-      console.log(res)
-      let goodsImages = res.data.goods_infos.filter(item=>(item.kind == 0))
-      let goodsContentInfo = res.data.goods_infos.filter(item=>(item.kind == 1))[0]
 
-      this.setData({
-        goodsData:res.data,
-        goodsImages,
-        goodsContentInfo
-      })
+    /*事件改变监听*/
+    eventChannel.on('goodsData', (res) => {
+      let goodsImages = res.data.goods_infos.filter(item => (item.kind == 1 || item.kind == 2 || item.kind == 3 || item.kind == 4))        /*数据筛选获得图片*/
+      let goodsContentInfo = res.data.goods_infos.filter(item => (item.kind == 1 || item.kind == 2 || item.kind == 3 || item.kind == 4))     /*数据筛获得纯文本*/
+
+      this.setData({ goodsData: res.data, goodsImages, goodsContentInfo })
     })
-    // 拉取sku规格数据
-    let goodsSkuDataRes = await wx.wxp.request({
-      url: `http://localhost:3000/goods/goods/${goodsId}/sku`,
-    })
-    if (goodsSkuDataRes){
-      let goodsSkuData = goodsSkuDataRes.data.data 
-      this.setData({
-        goodsSkuData
-      })
+
+    /*拉取sku规格数据*/
+    let goodsSkuDataRes = await wx.wxp.request({ url: `http://localhost:3000/api/goods/${goodsId}/sku` })
+
+    if (goodsSkuDataRes) {
+      let goodsSkuData = goodsSkuDataRes.data.data    //删除外层
+      this.setData({ goodsSkuData })
     }
   },
 
-  onTapSkuTag(e){
-    // 获取及设置选择的规格
-    let attrvalue = e.currentTarget.dataset.attrvalue
-    let attrKey = e.currentTarget.dataset.attrkey
+  /**
+   * 点击商品规格tag 标签
+   * @param {*} e 
+   */
+  onTapSkuTag(e) {
+    let attrKey   = e.currentTarget.dataset.attrkey         /*获取表爱你key 是个字符串*/
+    let attrvalue = e.currentTarget.dataset.attrvalue       /*获取标签value 是个obj*/
 
-    console.log('attrvalueid',attrvalue,attrKey);
-    let selectedAttrValue = this.data.selectedAttrValue
-    selectedAttrValue[attrKey] = attrvalue
-    this.setData({
-      selectedAttrValue
-    })
-    // 计算价格及库存
-    let totalIdValue = 0
+    let selectedAttrValue          = this.data.selectedAttrValue    /*取出老数据*/
+        selectedAttrValue[attrKey] = attrvalue                      /*这里覆盖了*/
+
+    this.setData({selectedAttrValue})
+    
+    /**
+     * 计算价格及库存
+     */
+    let totalIdValue  = []
     let goodsAttrKeys = this.data.goodsSkuData.goodsAttrKeys
-    for (let j=0;j<goodsAttrKeys.length;j++){
-      let attrKey = goodsAttrKeys[j].attr_key
-      if (selectedAttrValue[attrKey]){
-        totalIdValue+=selectedAttrValue[attrKey].id
+    for (let i = 0; i < goodsAttrKeys.length; i++) {
+      let attrKey = goodsAttrKeys[i].attr_key
+      if (selectedAttrValue[attrKey]) {
+        totalIdValue.push(selectedAttrValue[attrKey].id)      /*获取id 相当于内存大小8G 4G的最小id*/
       }
     }
-    console.log("totalIdValue", totalIdValue);
-    
-    let goodsSku = this.data.goodsSkuData.goodsSku
-    let tempTotalIdValue = 0
 
-    for(let j=0;j<goodsSku.length;j++){
-      let goodsAttrPath = goodsSku[j].goods_attr_path 
-      if (goodsAttrPath.length != goodsAttrKeys.length){
-        break
-      }
-      tempTotalIdValue = 0
-      goodsAttrPath.forEach(item=>tempTotalIdValue += item)
-      console.log("tempTotalIdValue",tempTotalIdValue);
+    let goodsSku         = this.data.goodsSkuData.goodsSku    /*记录商品库存的最小种类*/
+    let tempTotalIdValue = []
 
-      if (tempTotalIdValue == totalIdValue){
-        let selectedGoodsSku = goodsSku[j]
-        this.setData({
-          selectedGoodsSku
-        })
+    /*循环商品最小单元*/
+    for (let i = 0; i < goodsSku.length; i++) {
+      let goodsAttrPath         = goodsSku[i].goods_attr_path
+      if (goodsAttrPath.length != goodsAttrKeys.length) { break }   //如果不存在goods_attr_path 就跳出循环
+
+      goodsAttrPath.forEach(item => tempTotalIdValue.push(item))
+      console.log("tempTotalIdValue", tempTotalIdValue);
+
+      if (tempTotalIdValue == totalIdValue) {
+        let selectedGoodsSku = goodsSku[i]
+        this.setData({selectedGoodsSku})
         break;
       }
     }
   },
 
   // 确定选择当前规格
-  onConfirmGoodsSku(){
+  onConfirmGoodsSku() {
     let goodsSkuData = this.data.goodsSkuData
     let selectedGoodsSkuObject = this.data.selectedGoodsSkuObject
     selectedGoodsSkuObject.sku = Object.assign({}, this.data.selectedGoodsSku)
     selectedGoodsSkuObject.text = ''
-    for (let j=0;j<goodsSkuData.goodsAttrKeys.length;j++){
+    for (let j = 0; j < goodsSkuData.goodsAttrKeys.length; j++) {
       let item = goodsSkuData.goodsAttrKeys[j]
-      if (!this.data.selectedAttrValue[item.attr_key]){
+      if (!this.data.selectedAttrValue[item.attr_key]) {
         wx.showModal({
           title: '没有选择全部规格',
-          showCancel:false
+          showCancel: false
         })
         return
       }
@@ -163,54 +155,5 @@ Page({
       selectedGoodsSkuObject,
       showSkuPanel: false
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   }
 })

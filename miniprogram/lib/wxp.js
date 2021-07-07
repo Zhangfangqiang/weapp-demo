@@ -1,6 +1,7 @@
 import { promisifyAll } from 'miniprogram-api-promise';   //扩展微信小程序的api来支持promise。
 
-const wxp = {}
+const URL_BASE = 'http://192.168.0.108:3000'
+const wxp      = {URL_BASE}
 promisifyAll(wx, wxp)                                     //扩展api
 
 /**
@@ -16,6 +17,8 @@ wxp.requestT = function (args) {
   if (args.url) { 
     args.url = args.url.replace(/^http:\/\/localhost:3000/, URL_BASE) 
   }
+  console.log(args.url)
+
   return wxp.request(args).catch(function (reason) {
     console.log('reason', reason)
   })

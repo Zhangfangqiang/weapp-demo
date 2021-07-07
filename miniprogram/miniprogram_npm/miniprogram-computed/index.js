@@ -338,15 +338,7 @@ exports.behavior = Behavior({
       (_defFields$observers = defFields.observers).push.apply(_defFields$observers, observersItems);
     } else {
       observersItems.forEach(function (item) {
-        var f = defFields.observers[item.fields];
-        if (!f) {
-          defFields.observers[item.fields] = item.observer;
-        } else {
-          defFields.observers[item.fields] = function () {
-            item.observer.call(this);
-            f.call(this);
-          };
-        }
+        defFields.observers[item.fields] = item.observer;
       });
     }
   }

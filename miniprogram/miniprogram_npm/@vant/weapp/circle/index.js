@@ -1,10 +1,8 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-var color_1 = require('../common/color');
 var component_1 = require('../common/component');
 var utils_1 = require('../common/utils');
-var validator_1 = require('../common/validator');
-var version_1 = require('../common/version');
+var color_1 = require('../common/color');
 var canvas_1 = require('./canvas');
 function format(rate) {
   return Math.min(Math.max(rate, 0), 100);
@@ -41,7 +39,7 @@ component_1.VantComponent({
       value: color_1.WHITE,
     },
     color: {
-      type: null,
+      type: [String, Object],
       value: color_1.BLUE,
       observer: function () {
         var _this = this;
@@ -72,11 +70,11 @@ component_1.VantComponent({
       var _a = this.data,
         type = _a.type,
         size = _a.size;
-      if (type === '' || !version_1.canIUseCanvas2d()) {
+      if (type === '') {
         var ctx = wx.createCanvasContext('van-circle', this);
         return Promise.resolve(ctx);
       }
-      var dpr = utils_1.getSystemInfoSync().pixelRatio;
+      var dpr = wx.getSystemInfoSync().pixelRatio;
       return new Promise(function (resolve) {
         wx.createSelectorQuery()
           .in(_this)
@@ -100,7 +98,7 @@ component_1.VantComponent({
       var _a = this.data,
         color = _a.color,
         size = _a.size;
-      if (validator_1.isObj(color)) {
+      if (utils_1.isObj(color)) {
         return this.getContext().then(function (context) {
           var LinearColor = context.createLinearGradient(size, 0, 0, 0);
           Object.keys(color)
@@ -180,14 +178,10 @@ component_1.VantComponent({
       this.currentValue = this.currentValue || 0;
       this.interval = setInterval(function () {
         if (_this.currentValue !== value) {
-          if (Math.abs(_this.currentValue - value) < STEP) {
-            _this.currentValue = value;
+          if (_this.currentValue < value) {
+            _this.currentValue += STEP;
           } else {
-            if (_this.currentValue < value) {
-              _this.currentValue += STEP;
-            } else {
-              _this.currentValue -= STEP;
-            }
+            _this.currentValue -= STEP;
           }
           _this.drawCircle(_this.currentValue);
         } else {

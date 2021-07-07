@@ -3,7 +3,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var component_1 = require('../common/component');
 var touch_1 = require('../mixins/touch');
 var version_1 = require('../common/version');
-var utils_1 = require('../common/utils');
 component_1.VantComponent({
   mixins: [touch_1.touch],
   props: {
@@ -26,13 +25,12 @@ component_1.VantComponent({
     value: {
       type: Number,
       value: 0,
-      observer: function (val) {
-        if (val !== this.value) {
-          this.updateValue(val);
-        }
-      },
+      observer: 'updateValue',
     },
-    barHeight: null,
+    barHeight: {
+      type: null,
+      value: '2px',
+    },
   },
   created: function () {
     this.updateValue(this.data.value);
@@ -41,7 +39,7 @@ component_1.VantComponent({
     onTouchStart: function (event) {
       if (this.data.disabled) return;
       this.touchStart(event);
-      this.startValue = this.format(this.value);
+      this.startValue = this.format(this.data.value);
       this.dragStatus = 'start';
     },
     onTouchMove: function (event) {
@@ -52,8 +50,8 @@ component_1.VantComponent({
       }
       this.touchMove(event);
       this.dragStatus = 'draging';
-      utils_1.getRect(this, '.van-slider').then(function (rect) {
-        var diff = (_this.deltaX / rect.width) * _this.getRange();
+      this.getRect('.van-slider').then(function (rect) {
+        var diff = (_this.deltaX / rect.width) * 100;
         _this.newValue = _this.startValue + diff;
         _this.updateValue(_this.newValue, false, true);
       });
@@ -69,7 +67,7 @@ component_1.VantComponent({
       var _this = this;
       if (this.data.disabled) return;
       var min = this.data.min;
-      utils_1.getRect(this, '.van-slider').then(function (rect) {
+      this.getRect('.van-slider').then(function (rect) {
         var value =
           ((event.detail.x - rect.left) / rect.width) * _this.getRange() + min;
         _this.updateValue(value, true);
@@ -79,8 +77,8 @@ component_1.VantComponent({
       value = this.format(value);
       var min = this.data.min;
       var width = ((value - min) * 100) / this.getRange() + '%';
-      this.value = value;
       this.setData({
+        value: value,
         barStyle:
           '\n          width: ' +
           width +

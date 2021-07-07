@@ -1,5 +1,4 @@
 <wxs src="../wxs/utils.wxs" module="utils" />
-<wxs src="./index.wxs" module="computed" />
 
 <van-overlay
   wx:if="{{ overlay }}"
@@ -12,7 +11,7 @@
 <view
   wx:if="{{ inited }}"
   class="custom-class {{ classes }} {{ utils.bem('popup', [position, { round, safe: safeAreaInsetBottom, safeTop: safeAreaInsetTop }]) }}"
-  style="{{ computed.popupStyle({ zIndex, currentDuration, display, customStyle }) }}"
+  style="z-index: {{ zIndex }}; -webkit-transition-duration:{{ currentDuration }}ms; transition-duration:{{ currentDuration }}ms; {{ display ? '' : 'display: none;' }};{{ customStyle }}"
   bind:transitionend="onTransitionEnd"
 >
   <slot />

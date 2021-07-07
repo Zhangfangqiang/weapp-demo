@@ -1,14 +1,21 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 var component_1 = require('../common/component');
-var relation_1 = require('../common/relation');
 var utils_1 = require('../common/utils');
 var ARRAY = [];
 component_1.VantComponent({
   field: true,
-  relation: relation_1.useChildren('dropdown-item', function () {
-    this.updateItemListData();
-  }),
+  relation: {
+    name: 'dropdown-item',
+    type: 'descendant',
+    current: 'dropdown-menu',
+    linked: function () {
+      this.updateItemListData();
+    },
+    unlinked: function () {
+      this.updateItemListData();
+    },
+  },
   props: {
     activeColor: {
       type: String,
@@ -47,7 +54,7 @@ component_1.VantComponent({
     itemListData: [],
   },
   beforeCreate: function () {
-    var windowHeight = utils_1.getSystemInfoSync().windowHeight;
+    var windowHeight = wx.getSystemInfoSync().windowHeight;
     this.windowHeight = windowHeight;
     ARRAY.push(this);
   },
@@ -90,7 +97,7 @@ component_1.VantComponent({
       var _a = this.data,
         zIndex = _a.zIndex,
         direction = _a.direction;
-      return utils_1.getRect(this, '.van-dropdown-menu').then(function (rect) {
+      return this.getRect('.van-dropdown-menu').then(function (rect) {
         var _a = rect.top,
           top = _a === void 0 ? 0 : _a,
           _b = rect.bottom,
