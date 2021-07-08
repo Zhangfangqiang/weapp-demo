@@ -18,3 +18,8 @@
 .van-popup{
   background-color: #efefef;
 }
+
+.van-button--primary {
+  background:#ee0a24 !important;
+  border: var(--button-primary-border-color,#ee0a24) !important;
+} 

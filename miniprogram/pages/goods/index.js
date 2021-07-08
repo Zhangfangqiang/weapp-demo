@@ -5,14 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showLoginPanel: false,
+    showLoginPanel1: false,
     showSkuPanel: false,
     goodsId: 0,
     goodsData: {},
     goodsImages: [],
     goodsContentInfo: {},
     goodsSkuData: {},
-    selectedGoodsSku: {},
+    selectedGoodsSku: {
+      price:'请选择规格',
+      stock:'请选择规格'
+    },
     selectedAttrValue: {},
     selectedGoodsSkuObject: {}
   },
@@ -23,30 +26,23 @@ Page({
    */
   async addToCart(e) {
     if (!this.data.selectedGoodsSkuObject.sku) {
-      wx.showModal({
-        title: '请选择商品规格',
-        showCancel: false
-      })
+      wx.showModal({title: '请选择商品规格',showCancel: false})
       this.showSkuPanelPopup()
       return
     }
-    let goods_id = this.data.goodsId
-    let goods_sku_id = this.data.selectedGoodsSkuObject.sku.id
+    let goods_id       = this.data.goodsId
+    let goods_sku_id   = this.data.selectedGoodsSkuObject.sku.id
     let goods_sku_desc = this.data.selectedGoodsSkuObject.text
-    let data = {
-      goods_id,
-      goods_sku_id,
-      goods_sku_desc
-    }
-    let res = await getApp().wxp.request4({
-      url: 'http://localhost:3000/user/my/carts',
+
+    console.log(this.data.selectedGoodsSkuObject)
+    let data           = {goods_id,goods_sku_id,goods_sku_desc}
+    let res = await getApp().wxp.requestL1({
+      url: 'http://localhost:3000/api/cart/index',
       method: 'post',
       data
     })
     if (res.data.msg == 'ok') {
-      wx.showToast({
-        title: '已添加',
-      })
+      wx.showToast({title: '已添加'})
     }
   },
 
@@ -69,13 +65,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    const eventChannel = this.getOpenerEventChannel()    /*打开事件频道*/
-    let goodsId = options.goodsId                 /*获取路由传递的goodsId*/
-    this.data.goodsId = goodsId
+    const eventChannel      = this.getOpenerEventChannel()    /*打开事件频道*/
+    let   goodsId           = options.goodsId                 /*获取路由传递的goodsId*/
+          this.data.goodsId = goodsId
 
     /*事件改变监听*/
     eventChannel.on('goodsData', (res) => {
-      let goodsImages = res.data.goods_infos.filter(item => (item.kind == 1 || item.kind == 2 || item.kind == 3 || item.kind == 4))        /*数据筛选获得图片*/
+      let goodsImages      = res.data.goods_infos.filter(item => (item.kind == 1 || item.kind == 2 || item.kind == 3 || item.kind == 4))        /*数据筛选获得图片*/
       let goodsContentInfo = res.data.goods_infos.filter(item => (item.kind == 1 || item.kind == 2 || item.kind == 3 || item.kind == 4))     /*数据筛获得纯文本*/
 
       this.setData({ goodsData: res.data, goodsImages, goodsContentInfo })
@@ -106,24 +102,24 @@ Page({
     /**
      * 计算价格及库存
      */
-    let totalIdValue  = []
+    let totalIdValue  = 0
     let goodsAttrKeys = this.data.goodsSkuData.goodsAttrKeys
     for (let i = 0; i < goodsAttrKeys.length; i++) {
       let attrKey = goodsAttrKeys[i].attr_key
       if (selectedAttrValue[attrKey]) {
-        totalIdValue.push(selectedAttrValue[attrKey].id)      /*获取id 相当于内存大小8G 4G的最小id*/
+        totalIdValue += selectedAttrValue[attrKey].id         /*获取id 相当于内存大小8G 4G的最小id*/
       }
     }
 
     let goodsSku         = this.data.goodsSkuData.goodsSku    /*记录商品库存的最小种类*/
-    let tempTotalIdValue = []
+    let tempTotalIdValue = 0
 
     /*循环商品最小单元*/
     for (let i = 0; i < goodsSku.length; i++) {
       let goodsAttrPath         = goodsSku[i].goods_attr_path
       if (goodsAttrPath.length != goodsAttrKeys.length) { break }   //如果不存在goods_attr_path 就跳出循环
 
-      goodsAttrPath.forEach(item => tempTotalIdValue.push(item))
+      goodsAttrPath.forEach(item=>tempTotalIdValue += item)
       console.log("tempTotalIdValue", tempTotalIdValue);
 
       if (tempTotalIdValue == totalIdValue) {
@@ -134,19 +130,19 @@ Page({
     }
   },
 
-  // 确定选择当前规格
+  /**
+   * 确定选择当前规格
+   */
   onConfirmGoodsSku() {
-    let goodsSkuData = this.data.goodsSkuData
+    let goodsSkuData           = this.data.goodsSkuData
     let selectedGoodsSkuObject = this.data.selectedGoodsSkuObject
     selectedGoodsSkuObject.sku = Object.assign({}, this.data.selectedGoodsSku)
     selectedGoodsSkuObject.text = ''
+    
     for (let j = 0; j < goodsSkuData.goodsAttrKeys.length; j++) {
       let item = goodsSkuData.goodsAttrKeys[j]
       if (!this.data.selectedAttrValue[item.attr_key]) {
-        wx.showModal({
-          title: '没有选择全部规格',
-          showCancel: false
-        })
+        wx.showModal({title: '没有选择全部规格',showCancel: false})
         return
       }
       selectedGoodsSkuObject.text += this.data.selectedAttrValue[item.attr_key].attr_value + ' '

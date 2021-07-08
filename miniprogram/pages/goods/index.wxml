@@ -75,7 +75,7 @@
 			<image style="width:100px;height:100px;border-radius:5px;" src="{{goodsImages[0].picture}}" />
 		</view>
 		<view style="flex:1;padding-left:10px;color: gray;padding-top: 10px;">
-			<view>价格：{{selectedGoodsSku.price/100}}元</view>
+			<view>价格：{{selectedGoodsSku.price}}元</view>
 			<view>库存：{{selectedGoodsSku.stock}}</view>
 			<view>规格：
 				<text wx:for="{{goodsSkuData.goodsAttrKeys}}" wx:key="attr_key" style="padding-right:5px;">
@@ -92,7 +92,6 @@
 			<van-cell>
 				<view slot="title">
 					<view class="van-cell-text">{{item.attr_key}}</view>
-
 					<!-- 循环value开始 -->
 					<block wx:for="{{item.goods_attr_values}}" wx:for-item="item2" wx:key="attr_value">
 						<van-tag bindtap="onTapSkuTag" data-attrvalue="{{item2}}" data-attrkey="{{item.attr_key}}"
@@ -100,22 +99,15 @@
 							</van-tag>
 					</block>
 					<!-- 循环value结束 -->
-
 				</view>
 			</van-cell>
 		</van-cell-group>
 	</block>
 	<!-- 循环key结束 -->
-
-
-
-
-
-
 	<van-button bindtap="onConfirmGoodsSku" type="primary" size="large">确定</van-button>
 </van-popup>
 <!-- 选择商品参数弹框结束 -->
 
 <!-- 登陆弹框开始 -->
-<LoginPanel show="{{showLoginPanel}}"></LoginPanel>
+<LoginPanel show="{{showLoginPanel1}}"></LoginPanel>
 <!-- 登陆弹框结束 -->

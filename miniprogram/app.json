@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/cart/index",
     "pages/category/index",
     "pages/goods/index",
     "pages/index/index"

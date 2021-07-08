@@ -1,6 +1,6 @@
 import { promisifyAll } from 'miniprogram-api-promise';   //扩展微信小程序的api来支持promise。
 
-const URL_BASE = 'http://192.168.0.108:3000'
+const URL_BASE = 'http://192.168.0.112:3000'
 const wxp      = {URL_BASE}
 promisifyAll(wx, wxp)                                     //扩展api
 

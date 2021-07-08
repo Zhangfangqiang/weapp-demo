@@ -1,5 +1,3 @@
-
-
 Component({
   options: {
     multipleSlots: false
@@ -55,7 +53,7 @@ Component({
         console.log("code",code);
         
         let res = await getApp().wxp.request({
-          url: `${getApp().wxp.URL_BASE}/user/wexin-login2`,
+          url: `${getApp().wxp.URL_BASE}/api/user/wexin-login0`,
           method: 'POST',
           header: {
             'content-type': 'application/json',
@@ -108,7 +106,7 @@ Component({
       const requestLoginApi = (code) => {
         //发起网络请求
         wx.request({
-          url: 'http://localhost:3000/user/wexin-login2',
+          url: 'http://localhost:3000/api/user/wexin-login0',
           method: 'POST',
           header: {
             'content-type': 'application/json'
