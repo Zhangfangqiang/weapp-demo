@@ -1,34 +1,41 @@
-<!--miniprogram/pages/cart/index.wxml-->
-<!-- <text>miniprogram/pages/cart/index.wxml</text> -->
-
+<!-- 头部编辑按钮开始 -->
 <van-cell-group>
 	<van-cell title="购物车" value="" label="" border="{{ false }}">
-		<van-button bindtap="changeEditMode" slot="right-icon" plain type="info" size="mini">{{editMode?'完成':'编辑'}}</van-button>
+		<van-button bindtap="changeEditMode" slot="right-icon" plain type="info" size="mini">{{editMode?'完成':'编辑'}}
+		</van-button>
 	</van-cell>
 </van-cell-group>
+<!-- 头部编辑按钮结束 -->
 
+<!-- 循环购物车列表开始 -->
 <block wx:for="{{carts}}" wx:key="id">
-<van-checkbox-group value="{{ cartIdSelectedResult }}" bind:change="onSelectGoodsItem">
-	<view class="goods-card-container">
-		<view style="width:30px;display:flex;align-items:center;justify-content:center;">
-			<van-checkbox icon-size="17px" shape="square" name="{{item.id}}"></van-checkbox>
+	<van-checkbox-group value="{{ cartIdSelectedResult }}" bind:change="onSelectGoodsItem">
+		<view class="goods-card-container">
+			<!-- 选项开始 -->
+			<view style="width:30px;display:flex;align-items:center;justify-content:center;">
+				<van-checkbox icon-size="17px" shape="square" name="{{item.id}}"></van-checkbox>
+			</view>
+			<!-- 选项结束 -->
+
+			<view style="flex:1;background:white;">
+				<van-card custom-class="goods-card" price="{{item.price/100}}元" desc="{{item.sku_desc}}"
+					title="{{item.goods_name}}" thumb="{{item.goods_image}}">
+					<view slot="footer">
+						<van-stepper data-num="{{item.num}}" data-id="{{item.id}}" bind:change="onCartGoodsNumChanged" value="{{item.num}}" step="1" />
+					</view>
+				</van-card>
+			</view>
 		</view>
-		<view style="flex:1;background:white;">
-			<van-card custom-class="goods-card" price="{{item.price*item.num/100}}元" desc="{{item.sku_desc}}" title="{{item.goods_name}}" thumb="{{item.goods_image}}">
-				<view slot="footer">
-					<van-stepper data-num="{{item.num}}" data-id="{{item.id}}" bind:change="onCartGoodsNumChanged" value="{{item.num}}" step="1" />
-				</view>
-			</van-card>
-		</view>
-	</view>
-</van-checkbox-group>
+	</van-checkbox-group>
 </block>
+<!-- 循环购物车列表结束 -->
 
 <van-submit-bar bind:submit="onCartConfirm" wx:if="{{!editMode}}" price="{{ totalPrice }}" button-text="提交订单">
 	<van-checkbox value="{{ allIsSelected }}" bind:change="onSelectAll" shape="square">全选</van-checkbox>
 	<view wx:if="{{false}}" slot="tip">您的收货地址</view>
 </van-submit-bar>
 
+<!-- 底部菜单开始 -->
 <van-cell-group wx:else title="" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 	<van-cell>
 		<view slot="title">
@@ -36,8 +43,15 @@
 				全选
 			</van-checkbox>
 		</view>
+		
+		<!-- 删除按钮开始 -->
 		<van-button bindtap="removeCartGoods" size="mini" slot="right-icon" plain type="info">删除</van-button>
+		<!-- 删除按钮结束 -->
+
 	</van-cell>
 </van-cell-group>
+<!-- 底部菜单结束 -->
 
+<!-- 登陆组件开始 -->
 <LoginPanel show="{{showLoginPanel1}}"></LoginPanel>
+<!-- 登陆组件结束 -->

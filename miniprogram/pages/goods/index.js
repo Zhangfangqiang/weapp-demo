@@ -34,7 +34,8 @@ Page({
     let goods_sku_id   = this.data.selectedGoodsSkuObject.sku.id
     let goods_sku_desc = this.data.selectedGoodsSkuObject.text
 
-    console.log(this.data.selectedGoodsSkuObject)
+    console.log('selectedGoodsSkuObject',this.data.selectedGoodsSkuObject)
+
     let data           = {goods_id,goods_sku_id,goods_sku_desc}
     let res = await getApp().wxp.requestL1({
       url: 'http://localhost:3000/api/cart/index',
@@ -98,30 +99,33 @@ Page({
         selectedAttrValue[attrKey] = attrvalue                      /*这里覆盖了*/
 
     this.setData({selectedAttrValue})
+    console.log('选中的标签',selectedAttrValue)
     
     /**
      * 计算价格及库存
      */
-    let totalIdValue  = 0
+    let totalIdValue  = 0                                     /*选中的 value id 总和*/
     let goodsAttrKeys = this.data.goodsSkuData.goodsAttrKeys
     for (let i = 0; i < goodsAttrKeys.length; i++) {
       let attrKey = goodsAttrKeys[i].attr_key
       if (selectedAttrValue[attrKey]) {
-        totalIdValue += selectedAttrValue[attrKey].id         /*获取id 相当于内存大小8G 4G的最小id*/
+        totalIdValue += selectedAttrValue[attrKey].id         /*获取 value id 相当于内存大小8G 4G的最小id*/
       }
     }
 
     let goodsSku         = this.data.goodsSkuData.goodsSku    /*记录商品库存的最小种类*/
-    let tempTotalIdValue = 0
 
     /*循环商品最小单元*/
     for (let i = 0; i < goodsSku.length; i++) {
+      let tempTotalIdValue      = 0
       let goodsAttrPath         = goodsSku[i].goods_attr_path
+      console.log("goodsAttrPath",goodsAttrPath)
+
       if (goodsAttrPath.length != goodsAttrKeys.length) { break }   //如果不存在goods_attr_path 就跳出循环
+      goodsAttrPath.forEach( (item) => {tempTotalIdValue += item} )
 
-      goodsAttrPath.forEach(item=>tempTotalIdValue += item)
-      console.log("tempTotalIdValue", tempTotalIdValue);
 
+      console.log('pathId + 选中 ',tempTotalIdValue == totalIdValue)
       if (tempTotalIdValue == totalIdValue) {
         let selectedGoodsSku = goodsSku[i]
         this.setData({selectedGoodsSku})
@@ -147,6 +151,8 @@ Page({
       }
       selectedGoodsSkuObject.text += this.data.selectedAttrValue[item.attr_key].attr_value + ' '
     }
+    console.log('确认规格赋值',selectedGoodsSkuObject)
+
     this.setData({
       selectedGoodsSkuObject,
       showSkuPanel: false
