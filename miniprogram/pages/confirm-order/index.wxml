@@ -1,0 +1,34 @@
+<!-- 地址选中开始 -->
+<van-cell-group>
+  <van-cell bind:click="toSelectAddress" is-link icon="location-o" size="large" title="{{address.userName}}"
+    value="{{address.telNumber}}" label="{{address.addressInfo}}" />
+</van-cell-group>
+<!-- 地址选中结束 -->
+
+<!-- 结算内容列表开始 -->
+<view style="padding:10px;">
+  <block wx:for="{{carts}}" wx:key="id">
+    <van-card custom-class="goods-card" price="{{item.price*item.num/100}}元" desc="{{item.sku_desc}}"
+      title="{{item.goods_name}}" thumb="{{item.goods_image}}">
+      <view slot="footer">
+        <text>x{{item.num}}</text>
+      </view>
+    </van-card>
+  </block>
+</view>
+<!-- 结算内容列表结束 -->
+
+<!-- 留言开始 -->
+<van-cell-group title=" ">
+  <van-cell title="配置方式" value="快递免运费" />
+  <van-field model:value="{{ userMessage }}" label="买家留言" border="{{ false }}" placeholder="留言建议提前协商" />
+</van-cell-group>
+<!-- 留言结束 -->
+
+<!-- 提交订单按钮开始 -->
+<van-submit-bar price="{{ totalPrice }}" button-text="提交订单" bind:submit="onSubmit" />
+<!-- 提交订单按钮结束 -->
+
+<!-- 小微商户支付组件开始 -->
+<xunhupay wx:if="{{ prepareSubmchPay }}" params="{{ submchPayParams }}" bindsuccess="bindPaySuccess"bindfail="bindPayFail" bindcomplete="bindPayComplete" />
+<!-- 小微商户支付组件结束 -->

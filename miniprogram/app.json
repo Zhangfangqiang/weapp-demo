@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/cart/index",
+    "pages/address-list/index",
     "pages/category/index",
+    "pages/confirm-order/index",
     "pages/goods/index",
     "pages/index/index"
   ],
@@ -12,5 +14,8 @@
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  }
 }

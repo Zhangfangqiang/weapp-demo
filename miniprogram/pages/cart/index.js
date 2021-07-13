@@ -30,12 +30,12 @@ Page({
     this.setData({ totalPrice })
   },
 
-
+  /**
+   * 编辑页存储的值修改
+   */
   changeEditMode() {
     let editMode = !this.data.editMode
-    this.setData({
-      editMode
-    })
+    this.setData({ editMode })
   },
 
   /**
@@ -89,10 +89,10 @@ Page({
    * @param {*} e 
    */
   onCartConfirm(e) {
-    console.log(e)
-    let carts = this.data.carts
+    console.log('onCartConfirm' , e)
+    let carts    = this.data.carts
     let cartData = []
-    let ids = this.data.cartIdSelectedResult
+    let ids      = this.data.cartIdSelectedResult
 
     //判断是否又订单数据
     if (ids.length == 0) {
@@ -124,12 +124,11 @@ Page({
    * @param {*} e 
    */
   async onCartGoodsNumChanged(e) {
-    let num = e.detail
-    let data = { num }
-    let oldNum = parseInt(e.currentTarget.dataset.num)
+    let num         = e.detail
+    let data        = { num }
+    let oldNum      = parseInt(e.currentTarget.dataset.num)
     let cartGoodsId = e.currentTarget.dataset.id
-
-    let res = await getApp().wxp.requestL1({ url: `http://localhost:3000/api/cart/my/${cartGoodsId}`, method: 'put', data })
+    let res         = await getApp().wxp.requestL1({ url: `http://localhost:3000/api/cart/my/${cartGoodsId}`, method: 'put', data })
 
     if (res.data.msg == 'ok') {
       wx.showToast({ title: (num > oldNum) ? '增加成功' : '减少成功', })
