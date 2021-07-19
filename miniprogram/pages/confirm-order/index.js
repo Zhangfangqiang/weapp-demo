@@ -8,7 +8,7 @@ Page({
     userMessage: '',
     totalPrice: 0,
     address: {
-      userName: '选择'
+      user_name: '选择'
     },
     submchPayParams: {},
     submchPayorderResult: {},

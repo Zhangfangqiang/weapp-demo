@@ -1,7 +1,7 @@
 <!-- 地址选中开始 -->
 <van-cell-group>
-  <van-cell bind:click="toSelectAddress" is-link icon="location-o" size="large" title="{{address.userName}}"
-    value="{{address.telNumber}}" label="{{address.addressInfo}}" />
+  <van-cell bind:click="toSelectAddress" is-link icon="location-o" size="large" title="{{address.user_name}}"
+    value="{{address.tel_number}}" label="{{address.address_info}}" />
 </van-cell-group>
 <!-- 地址选中结束 -->
 

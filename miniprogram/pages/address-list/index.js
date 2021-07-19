@@ -90,7 +90,8 @@ Page({
     let addressList = this.data.addressList
     let hasExist    = addressList.some((item, index) => {
       if (item.id == address.id) {
-        addressList[index] = {user_name:address.userName, tel_number:address.telNumber, detail_info:address.detailInfo, region:address.region, id:address.id}
+        //addressList[index] = {user_name:address.userName, tel_number:address.telNumber, detail_info:address.detailInfo, region:address.region, id:address.id}
+        addressList[index] = address
         return true
       }
       return false
